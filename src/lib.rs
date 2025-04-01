@@ -32,7 +32,9 @@ pub fn process_instruction(
         Instructions::Take {} => {
             instructions::take(program_id, accounts)?;
         }
-        Instructions::Refund {} => {}
+        Instructions::Refund {} => {
+            instructions::refund(program_id, accounts)?;
+        }
     }
     Ok(())
 }

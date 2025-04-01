@@ -173,6 +173,7 @@ pub fn take(program_id: &Pubkey, accounts: &[AccountInfo<'_>]) -> ProgramResult 
     **maker.lamports.borrow_mut() += lamports;
 
     escrow.realloc(0, true)?;
+    escrow.assign(system_program.key);
 
     Ok(())
 }
