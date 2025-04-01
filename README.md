@@ -9,8 +9,6 @@
 
 ---
 
-# Testing
-
 ## Accounts
 
 ```rust
