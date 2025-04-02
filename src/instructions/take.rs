@@ -67,7 +67,7 @@ pub fn take(program_id: &Pubkey, accounts: &[AccountInfo<'_>]) -> ProgramResult 
 
     let escrow_pda = Pubkey::create_program_address(seeds, program_id)?;
     if escrow_pda != *escrow.key {
-        return Err(ProgramError::InvalidArgument);
+        return Err(Error::InvalidProgramAddress.into());
     }
 
     // create token_account_b for maker if it does not exist

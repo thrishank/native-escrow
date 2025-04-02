@@ -7,6 +7,7 @@ use spl_associated_token_account::get_associated_token_address;
 use spl_token::instruction::{close_account, transfer};
 use spl_token::state::Account;
 
+use crate::error::Error;
 use crate::state::Offer;
 
 pub fn refund(program_id: &Pubkey, accounts: &[AccountInfo<'_>]) -> ProgramResult {
@@ -30,16 +31,16 @@ pub fn refund(program_id: &Pubkey, accounts: &[AccountInfo<'_>]) -> ProgramResul
     let escrow_pda = Pubkey::create_program_address(seeds, program_id)?;
 
     if *escrow.key != escrow_pda {
-        return Err(ProgramError::InvalidArgument);
+        return Err(Error::InvalidProgramAddress.into());
     }
 
     let maker_token_ata = &get_associated_token_address(maker.key, token_mint_a.key);
     if maker_token_ata != maker_token_account_a.key {
-        return Err(ProgramError::InvalidArgument);
+        return Err(Error::InvalidTokenATA.into());
     }
     let escrow_token_ata = &get_associated_token_address(escrow.key, token_mint_a.key);
     if escrow_token_ata != escrow_token_account_a.key {
-        return Err(ProgramError::InvalidArgument);
+        return Err(Error::InvalidTokenATA.into());
     }
 
     let escrow_token_amount = Account::unpack(&escrow_token_account_a.data.borrow())?.amount;

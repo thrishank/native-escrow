@@ -11,6 +11,7 @@ use spl_associated_token_account::instruction::create_associated_token_account;
 use spl_token::instruction::transfer;
 use spl_token::state::Account;
 
+use crate::error::Error;
 use crate::state::Offer;
 
 pub fn make(
@@ -41,12 +42,12 @@ pub fn make(
 
     let maker_token_ata = &get_associated_token_address(maker.key, token_mint_a.key);
     if maker_token_ata != maker_token_account_a.key {
-        return Err(ProgramError::InvalidArgument);
+        return Err(Error::InvalidTokenATA.into());
     }
 
     let escrow_token_ata = &get_associated_token_address(escrow.key, token_mint_a.key);
     if escrow_token_ata != escrow_token_account_a.key {
-        return Err(ProgramError::InvalidArgument);
+        return Err(Error::InvalidTokenATA.into());
     }
 
     let (escrow_pda, bump) = Pubkey::find_program_address(
@@ -55,7 +56,7 @@ pub fn make(
     );
 
     if escrow_pda != *escrow.key {
-        return Err(ProgramError::InvalidArgument);
+        return Err(Error::InvalidProgramAddress.into());
     }
 
     let offer = Offer {

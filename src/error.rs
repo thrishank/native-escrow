@@ -6,7 +6,7 @@ pub enum Error {
     #[error("Invalid token ata")]
     InvalidTokenATA,
     #[error("Invalid program address")]
-    InvalidPrgoramAddress,
+    InvalidProgramAddress,
 }
 
 impl From<Error> for ProgramError {
