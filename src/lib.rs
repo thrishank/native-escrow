@@ -38,3 +38,12 @@ pub fn process_instruction(
     }
     Ok(())
 }
+
+solana_security_txt::security_txt! {
+    name: "native-token-escrow",
+    source_code: "https://github.com/thrishank/native-escrow",
+    contacts: "https://githbub.com/thrishank",
+    project_url: "",
+    policy: "",
+    preferred_languages: "en"
+}
